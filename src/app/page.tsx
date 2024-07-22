@@ -257,7 +257,7 @@ function getTimelineSlice(segmentId: number): any[] {
   const slice =
     data.result
       .slice(start, end);
-  const textlessAndTextful = [];
+  const textlessAndTextful:any[] = [];
   slice.forEach((e) => {
     textlessAndTextful.push(e);
     const textlessStart = e.frame_end + 1;
@@ -276,7 +276,7 @@ function getTimelineSlice(segmentId: number): any[] {
       }
     }
   });
-  return textlessAndTextful;
+  return textlessAndTextful as any[];
 }
 function Timeline({
   setTimelineEpisodeState,
