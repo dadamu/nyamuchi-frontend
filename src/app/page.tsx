@@ -18,6 +18,13 @@ const episodes = [
 const HOST = 'https://anon-tokyo.com';
 const CDN = 'https://cdn.anon-tokyo.com';
 
+type Segment = {
+  text: string,
+  episode: string,
+  frame_start: number,
+  frame_end: number,
+  segment_id: number
+}
 //const API = 'https://api.anon-tokyo.com'
 export default function Home() {
 
@@ -128,7 +135,7 @@ function FullImageContainer({
   currentFrame, setCurrentFrame }:
   {
     timelineEpisodeState: string,
-    setTimelineEpisodeState : React.Dispatch<string>,
+    setTimelineEpisodeState: React.Dispatch<string>,
     fullImageSrc: string,
     setFullImageSrc: React.Dispatch<any>,
     isVisible: boolean,
@@ -242,7 +249,7 @@ function FullImageContainer({
     </div>)
 }
 
-function getTimelineSlice(segmentId: number) {
+function getTimelineSlice(segmentId: number): any[] {
   const offset = 3;
   //clamp
   const start = Math.min(Math.max(segmentId - offset, 0), data.result.length);
