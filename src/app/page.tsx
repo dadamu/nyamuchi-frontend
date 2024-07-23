@@ -87,6 +87,7 @@ export default function Home() {
           //setSegment={setSegment}
           setSegmentId={setSegmentId}
           segmentIdRef={segmentIdRef}
+          setFrameStartEnd={setFrameStartEnd}
           setCurrentFrame={setCurrentFrame} />
         <div style={{ position: "fixed", top: "0px" }}>
           <input style={{ position: "relative", padding: "0.5rem", opacity: "0.7", top: "20px", left: "20px" }} placeholder="輸入台詞" value={keyword} onChange={handleKeywordOnChange}></input>
@@ -230,11 +231,14 @@ function FullImageContainer({
           min={frameStartEnd[0]}
           max={frameStartEnd[1]} />
 
-        <Chip
-          style={{ marginLeft: "10dvw" }}
-          color="primary"
-          sx={{ '& .MuiSliderColorPrimary': "rgb(51, 129, 175)" }}
-          label={`${currentFrame - frameStartEnd[0]}/${frameStartEnd[1] - frameStartEnd[0]}`} />
+        <Tooltip title={`${frameStartEnd[0]}~${frameStartEnd[1]} ${currentFrame}`}>
+          <Chip
+            style={{ marginLeft: "10dvw" }}
+            color="primary"
+            sx={{ '& .MuiSliderColorPrimary': "rgb(51, 129, 175)" }}
+            label={`${currentFrame - frameStartEnd[0]}/${frameStartEnd[1] - frameStartEnd[0]}`} />
+
+        </Tooltip>
 
         <Timeline
           setTimelineEpisodeState={setTimelineEpisodeState}
@@ -408,6 +412,7 @@ const ItemWrapper = ({
   //setSegment,
   setSegmentId,
   segmentIdRef,
+  setFrameStartEnd,
   setCurrentFrame }:
   {
     index: number,
@@ -417,6 +422,7 @@ const ItemWrapper = ({
     //setSegment: React.Dispatch<any>,
     setSegmentId: React.Dispatch<any>,
     segmentIdRef: React.MutableRefObject<number>
+    setFrameStartEnd: React.Dispatch<[number, number]>
     setCurrentFrame: React.Dispatch<any>
   }) => (
   <div style={{ width: "inherit" }}>
@@ -443,6 +449,7 @@ const ItemWrapper = ({
           setFullImageSrc(`${HOST}/image?frame=${result.frame_start}&episode=${result.episode}`);
           setIsVisible(true);
           setSegmentId(result.segment_id);
+          setFrameStartEnd([result.frame_start, result.frame_end]);
           setCurrentFrame(result.frame_start);
           segmentIdRef.current = result.segment_id;
         }}
@@ -483,6 +490,7 @@ function SearchResult({
   //setSegment,
   setSegmentId,
   segmentIdRef,
+  setFrameStartEnd,
   setCurrentFrame }:
   {
     resultList: any[],
@@ -491,6 +499,7 @@ function SearchResult({
     //setSegment: React.Dispatch<any>,
     setSegmentId: React.Dispatch<any>,
     segmentIdRef: React.MutableRefObject<number>
+    setFrameStartEnd: React.Dispatch<[number, number]>
     setCurrentFrame: React.Dispatch<any>
   }) {
   return (
@@ -510,6 +519,7 @@ function SearchResult({
           //setSegment={setSegment}
           setSegmentId={setSegmentId}
           segmentIdRef={segmentIdRef}
+          setFrameStartEnd={setFrameStartEnd}
           setCurrentFrame={setCurrentFrame}>
 
         </ItemWrapper>)}
