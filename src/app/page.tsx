@@ -20,13 +20,6 @@ const episodes = [
 const HOST = 'https://anon-tokyo.com';
 const CDN = 'https://cdn.anon-tokyo.com';
 
-type Segment = {
-  text: string,
-  episode: string,
-  frame_start: number,
-  frame_end: number,
-  segment_id: number
-}
 //const API = 'https://api.anon-tokyo.com'
 export default function Home() {
 
@@ -84,6 +77,7 @@ export default function Home() {
 
         <SearchResult
           resultList={resultList}
+          setTimelineEpisodeState={setTimelineEpisodeState}
           setFullImageSrc={setFullImageSrc}
           setIsVisible={setIsVisible}
           //setSegment={setSegment}
@@ -140,18 +134,18 @@ function FullImageContainer({
     timelineEpisodeState: string,
     setTimelineEpisodeState: React.Dispatch<string>,
     fullImageSrc: string,
-    setFullImageSrc: React.Dispatch<any>,
+    setFullImageSrc: React.Dispatch<string>,
     isVisible: boolean,
-    setIsVisible: React.Dispatch<any>,
+    setIsVisible: React.Dispatch<boolean>,
     //segment: any,
     //setSegment: React.Dispatch<any>,
     //segmentId: number,
-    setSegmentId: React.Dispatch<any>,
+    setSegmentId: React.Dispatch<number>,
     segmentIdRef: React.MutableRefObject<number>
     frameStartEnd: [number, number],
     setFrameStartEnd: React.Dispatch<[number, number]>
     currentFrame: number,
-    setCurrentFrame: React.Dispatch<any>
+    setCurrentFrame: React.Dispatch<number>
   }) {
 
   //console.log("FullImageContainer :", segmentId);
@@ -160,7 +154,7 @@ function FullImageContainer({
       setFullImageSrc(`${HOST}/image?frame=${frame}&episode=${episode}`);
     }, 300),
     [])
-  const handleCurrentFrameOnChange = (_: Event, value: number | number[], activeThumb: number) => {
+  const handleCurrentFrameOnChange = (_: Event, value: number, activeThumb: number) => {
     debounceChangeCurrentFrame(value, timelineEpisodeState);
     setCurrentFrame(value);
   }
@@ -295,11 +289,11 @@ function Timeline({
 }:
   {
     setTimelineEpisodeState: React.Dispatch<string>
-    setFullImageSrc: React.Dispatch<any>,
-    setSegmentId: React.Dispatch<any>,
+    setFullImageSrc: React.Dispatch<string>,
+    setSegmentId: React.Dispatch<number>,
     segmentIdRef: React.MutableRefObject<number>
     setFrameStartEnd: React.Dispatch<[number, number]>,
-    setCurrentFrame: React.Dispatch<any>,
+    setCurrentFrame: React.Dispatch<number>,
   }) {
   const sg = data.result[segmentIdRef.current];
   const pos = sg.segment_id;
@@ -437,6 +431,7 @@ function formatFrameStamp(frame: number): string {
 const ItemWrapper = ({
   index,
   result,
+  setTimelineEpisodeState,
   setFullImageSrc,
   setIsVisible,
   //setSegment,
@@ -447,13 +442,14 @@ const ItemWrapper = ({
   {
     index: number,
     result: any,
-    setFullImageSrc: React.Dispatch<any>,
-    setIsVisible: React.Dispatch<any>,
+    setTimelineEpisodeState: React.Dispatch<string>,
+    setFullImageSrc: React.Dispatch<string>,
+    setIsVisible: React.Dispatch<boolean>,
     //setSegment: React.Dispatch<any>,
-    setSegmentId: React.Dispatch<any>,
+    setSegmentId: React.Dispatch<number>,
     segmentIdRef: React.MutableRefObject<number>
     setFrameStartEnd: React.Dispatch<[number, number]>
-    setCurrentFrame: React.Dispatch<any>
+    setCurrentFrame: React.Dispatch<number>
   }) => (
   <div style={{ width: "inherit" }}>
 
@@ -476,6 +472,7 @@ const ItemWrapper = ({
       <img className="result-item"
         onClick={function (e) {
           //initial set
+          setTimelineEpisodeState(result.episode);
           setFullImageSrc(`${HOST}/image?frame=${result.frame_start}&episode=${result.episode}`);
           setIsVisible(true);
           setSegmentId(result.segment_id);
@@ -515,6 +512,7 @@ const ItemWrapper = ({
 
 function SearchResult({
   resultList,
+  setTimelineEpisodeState,
   setFullImageSrc,
   setIsVisible,
   //setSegment,
@@ -524,13 +522,14 @@ function SearchResult({
   setCurrentFrame }:
   {
     resultList: any[],
-    setFullImageSrc: React.Dispatch<any>,
-    setIsVisible: React.Dispatch<any>,
+    setTimelineEpisodeState: React.Dispatch<string>,
+    setFullImageSrc: React.Dispatch<string>,
+    setIsVisible: React.Dispatch<boolean>,
     //setSegment: React.Dispatch<any>,
-    setSegmentId: React.Dispatch<any>,
+    setSegmentId: React.Dispatch<number>,
     segmentIdRef: React.MutableRefObject<number>
     setFrameStartEnd: React.Dispatch<[number, number]>
-    setCurrentFrame: React.Dispatch<any>
+    setCurrentFrame: React.Dispatch<number>
   }) {
   return (
     <>
@@ -544,6 +543,7 @@ function SearchResult({
         (<ItemWrapper
           index={index}
           result={r}
+          setTimelineEpisodeState={setTimelineEpisodeState}
           setFullImageSrc={setFullImageSrc}
           setIsVisible={setIsVisible}
           //setSegment={setSegment}
