@@ -154,9 +154,9 @@ function FullImageContainer({
       setFullImageSrc(`${HOST}/image?frame=${frame}&episode=${episode}`);
     }, 300),
     [])
-  const handleCurrentFrameOnChange = (_: Event, value: number, activeThumb: number) => {
+  const handleCurrentFrameOnChange = (_: Event, value: number | number[], activeThumb: number) => {
     debounceChangeCurrentFrame(value, timelineEpisodeState);
-    setCurrentFrame(value);
+    setCurrentFrame(value as number);
   }
 
   //const segment = data.result[segmentId];
