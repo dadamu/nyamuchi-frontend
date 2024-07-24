@@ -4,10 +4,9 @@
 //import "./globals.css";
 
 import { Analytics } from '@vercel/analytics/react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 //const inter = Inter({ subsets: ["latin"] });
-ReactGA.initialize("G-RZRPMDK12F")
-ReactGA.pageview(window.location.pathname + window.location.search)
+ReactGA.initialize("G-RZRPMDK12F");
 
 export default function RootLayout({
   children,
