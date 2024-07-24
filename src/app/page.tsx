@@ -7,7 +7,9 @@ import moment from "moment";
 import data from './result.json';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Tooltip, Slider, Chip } from "@mui/material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Tooltip, Slider, Chip, IconButton } from "@mui/material";
 
 import { Chart, GoogleChartWrapper, ReactGoogleChartEvent } from "react-google-charts";
 
@@ -173,7 +175,7 @@ function FullImageContainer({
       alignContent: "center",
       justifyContent: "center",
       //transform: "translate(50%, 50%)",
-      background: "rgba(0,0,0,0.5)",
+      background: "rgba(0, 0, 0, 0.5)",
       userSelect: "none",
       WebkitUserSelect: "none",
       msUserSelect: "none",
@@ -194,29 +196,30 @@ function FullImageContainer({
             //setSegment({is_visible: false, ...segment})
             setCurrentFrame(0);
           }}
-          className="close-button" />
+          className="close-button"
+        />
         <Slider
           sx={{
-            '& .MuiSlider-thumb': {
+            "& .MuiSlider-thumb": {
               color: "rgb(51, 129, 175)"
             },
-            '& .MuiSlider-track': {
+            "& .MuiSlider-track": {
               color: "rgb(51, 129, 175)",
               height: 8
             },
-            '& .MuiSlider-rail': {
+            "& .MuiSlider-rail": {
               color: "white",
               height: 20
             },
-            '& .MuiSlider-active': {
+            "& .MuiSlider-active": {
               color: "rgb(51, 129, 175)"
             },
-            '& .MuiSlider-mark': {
+            "& .MuiSlider-mark": {
               color: "black",
               height: 2,
               width: 2
             },
-            '& .MuiSlider-markActive': {
+            "& .MuiSlider-markActive": {
               color: "white",
               height: 2,
               width: 2
@@ -235,7 +238,7 @@ function FullImageContainer({
           <Chip
             style={{ marginLeft: "10dvw" }}
             color="primary"
-            sx={{ '& .MuiSliderColorPrimary': "rgb(51, 129, 175)" }}
+            sx={{ "& .MuiChip-colorPrimary": { color: "rgb(51, 129, 175)" } }}
             label={`${currentFrame - frameStartEnd[0]}/${frameStartEnd[1] - frameStartEnd[0]}`} />
 
         </Tooltip>
@@ -316,6 +319,7 @@ function Timeline({
     '#4c6914', '#8e7b0e', '#084219',
     '#57270c'
   ]
+  const currentIndex = slice.findIndex((e)=> { return sg.segment_id === e.segment_id });
   const timeline = [
     [
       { type: "string", id: "sentence" },
@@ -327,19 +331,15 @@ function Timeline({
     ],
     ...slice.map((e, i) => [
       "台詞",
-      (sg.text === e.text ? "> " : "") + e.text,
+      (sg.segment_id === e.segment_id ? "> " : "") + e.text,
       colors[e.frame_start % colors.length],
       `<div style="padding: 4px">${e.text}</br>${e.frame_start}~${e.frame_end}</br>${formatFrameStamp(e.frame_start)}~${formatFrameStamp(e.frame_end)}</div>`,
       (e.frame_start / 23.98 * 1000),
       (e.frame_end / 23.98 * 1000)
     ]),
   ];
-  //console.log(slice);
-  //console.log(segmentIdRef.current);
-  const selectHandler = function ({ chartWrapper, google }: { chartWrapper: GoogleChartWrapper, google: any }) {
-    const chart = chartWrapper.getChart();
-    const selection = chart.getSelection()[0]['row'];
-    const seg = sliceRef.current[selection];
+
+  const setNewSegment = (seg: any) => {
     const newSegmentId = seg.segment_id;
     if (newSegmentId >= 0 && newSegmentId < data.result.length) {
       sliceRef.current = getTimelineSlice(newSegmentId);
@@ -351,6 +351,14 @@ function Timeline({
     setFrameStartEnd([seg.frame_start, seg.frame_end]);
     setCurrentFrame(seg.frame_start);
   }
+  //console.log(slice);
+  //console.log(segmentIdRef.current);
+  const selectHandler = function ({ chartWrapper, google }: { chartWrapper: GoogleChartWrapper, google: any }) {
+    const chart = chartWrapper.getChart();
+    const selection = chart.getSelection()[0]['row'];
+    const seg = sliceRef.current[selection];
+    setNewSegment(seg);
+  }
 
   const selectEvent: ReactGoogleChartEvent =
   {
@@ -360,8 +368,9 @@ function Timeline({
 
   return (
     <div style={{ background: "white" }}>
+
       <Chart
-        style={{ marginTop: "16px" }}
+        style={{ marginTop: "8px" }}
         chartType="Timeline"
         data={timeline}
         options={{
@@ -370,12 +379,33 @@ function Timeline({
           },
           tooltip: {
             isHtml: true,
-          }
+          },
+          avoidOverlappingGridLines: false
         }}
         width="100dvw"
         height="100px"
         chartEvents={[selectEvent]}
       />
+      <div style={{ position: "fixed", bottom: "5dvh", width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
+        <IconButton
+          style={{ background: "rgb(51, 129, 175)", color: "white" }}
+          onClick={() => {
+            const next = Math.min(Math.max(currentIndex - 2, 0), sliceRef.current.length);
+            setNewSegment(sliceRef.current[next]);
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            const next = Math.min(Math.max(currentIndex + 2, 0), sliceRef.current.length);
+            setNewSegment(sliceRef.current[next]);
+          }}
+          style={{ background: "rgb(51, 129, 175)", color: "white", marginLeft: "32px" }}
+        >
+          <ArrowForwardIcon />
+        </IconButton>
+      </div>
     </div>
   );
 }
