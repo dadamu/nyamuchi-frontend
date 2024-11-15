@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{backgroundColor:"rgb(51, 129, 175)", height:"100%"}}>
+    <html lang="en" style={{backgroundColor:"#3381AF", height:"100%"}}>
       <title>MYGO</title>
       <body>{children}
         <Analytics/>

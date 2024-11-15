@@ -20,6 +20,8 @@ const episodes = [
 const HOST = 'https://anon-tokyo.com';
 const CDN = 'https://cdn.anon-tokyo.com';
 
+const SITE_THEME_COLOR = '#3381AF';
+
 //const API = 'https://api.anon-tokyo.com'
 export default function Home() {
 
@@ -73,7 +75,7 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ position: "relative", width: "100%", height: "100%", backgroundColor: "rgb(51, 129, 175)" }}>
+      <div style={{ position: "relative", width: "100%", height: "100%", backgroundColor: SITE_THEME_COLOR }}>
 
         <SearchResult
           resultList={resultList}
@@ -195,10 +197,10 @@ function FullImageContainer({
         <Slider
           sx={{
             "& .MuiSlider-thumb": {
-              color: "rgb(51, 129, 175)"
+              color: SITE_THEME_COLOR
             },
             "& .MuiSlider-track": {
-              color: "rgb(51, 129, 175)",
+              color: SITE_THEME_COLOR,
               height: 8
             },
             "& .MuiSlider-rail": {
@@ -206,7 +208,7 @@ function FullImageContainer({
               height: 20
             },
             "& .MuiSlider-active": {
-              color: "rgb(51, 129, 175)"
+              color: SITE_THEME_COLOR
             },
             "& .MuiSlider-mark": {
               color: "black",
@@ -232,7 +234,7 @@ function FullImageContainer({
           <Chip
             style={{ marginLeft: "10dvw" }}
             color="primary"
-            sx={{ "& .MuiChip-colorPrimary": { color: "rgb(51, 129, 175)" } }}
+            sx={{ "& .MuiChip-colorPrimary": { color: SITE_THEME_COLOR } }}
             label={`${currentFrame - frameStartEnd[0]}/${frameStartEnd[1] - frameStartEnd[0]}`} />
 
         </Tooltip>
@@ -382,7 +384,7 @@ function Timeline({
       />
       <div style={{ position: "fixed", bottom: "5dvh", width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
         <IconButton
-          style={{ background: "rgb(51, 129, 175)", color: "white" }}
+          style={{ background: SITE_THEME_COLOR, color: "white" }}
           onClick={() => {
             const next = Math.min(Math.max(currentIndex - 2, 0), sliceRef.current.length);
             setNewSegment(sliceRef.current[next]);
@@ -395,7 +397,7 @@ function Timeline({
             const next = Math.min(Math.max(currentIndex + 2, 0), sliceRef.current.length);
             setNewSegment(sliceRef.current[next]);
           }}
-          style={{ background: "rgb(51, 129, 175)", color: "white", marginLeft: "32px" }}
+          style={{ background: SITE_THEME_COLOR, color: "white", marginLeft: "32px" }}
         >
           <ArrowForwardIcon />
         </IconButton>
@@ -463,7 +465,7 @@ const ItemWrapper = ({
       background: "rgba(0, 0, 0, 0.3)"
     }}>
       <span style={{ padding: "4px", fontSize: "0.8rem", color: "white", maxLines: "1", textOverflow: "ellipsis" }}>{`${index}`}</span>
-      <span style={{ padding: "4px", fontSize: "0.8rem", color: "rgb(51, 129, 175)", maxLines: "1", textOverflow: "ellipsis" }}>{`${result.episode}`}</span>
+      <span style={{ padding: "4px", fontSize: "0.8rem", color: SITE_THEME_COLOR, maxLines: "1", textOverflow: "ellipsis" }}>{`${result.episode}`}</span>
       <span style={{ padding: "4px", fontSize: "0.8rem", color: "red", maxLines: "1", textOverflow: "ellipsis" }}>{`${result.frame_start} ~ ${result.frame_end}`}</span>
       <span style={{ padding: "4px", fontSize: "0.8rem", color: "white", maxLines: "1", textOverflow: "ellipsis" }}>{`${formatFrameStamp(result.frame_start)}`}</span>
     </div>
@@ -575,8 +577,11 @@ function Result({ result, index }: { result: any, index: number }) {
 
 function match(item: any, keyword: string, episode: string) {
   let ep: boolean = episode === '*' ? true : item.episode === episode;
-  let text = item.text as string
-  return (ep && text.toLowerCase().includes(keyword.toLowerCase())) === true;
+  let text = item.text as string;
+  let text_sim = item.text_sim as string;
+  let textMatch = text.toLowerCase().includes(keyword.toLowerCase());
+  let textSimMatch = text_sim.toLowerCase().includes(keyword.toLowerCase());
+  return (ep && (textMatch || textSimMatch)) === true;
 }
 
 /*async function getSearchResultList0(keyword: string, episode: string) {
