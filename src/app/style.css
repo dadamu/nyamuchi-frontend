@@ -4,11 +4,50 @@
         height: calc(56.25dvw / 5);
     }
 
-    .full-image {
+    .image-container {
         width: 60dvw;
         height: 33.75dvw;
         margin-left: 20dvw;
         margin-right: 20dvw;
+    }
+
+    .full-image {
+        width: 60dvw;
+        height: 33.75dvw;
+    }
+
+    .full-image-gif-mode-on {
+        width: 30dvw;
+        height: 16.875dvw;
+    }
+
+
+    .gif-start-end-frame-image-visible {
+        visibility: visible;
+        width: 25dvw;
+        height: calc(25dvw * 0.5625);
+    }
+
+    .gif-start-end-frame-image-hidden {
+        visibility: hidden;
+        width: 0dvw;
+        height: 0dvw;
+    }
+
+    .gif-start-end-input{
+        width: 25dvw;
+    }
+
+    .generate-button-visible {
+        height: 5dvh;
+    }
+
+    .generate-button-hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0dvw;
+        height: 0dvw;
+
     }
 
     .close-button {
@@ -16,7 +55,16 @@
         width: 10dvh;
         height: 10dvh;
         color: red;
-        right: 20dvw;   
+        right: 20dvw;
+        top: 0dvh;
+    }
+
+    .gif-mode-switch {
+        position: absolute;
+        padding: 2dvh;
+        background-color: #0000006b;
+        left: 20dvw;
+        top: 0dvh;
     }
 }
 
@@ -24,22 +72,76 @@
     .result-item {
         width: calc(98dvw / 4);
         height: calc(56.25dvw / 4);
+    }
 
+    .image-container {
+        width: 60dvw;
+        height: 33.75dvw;
+        margin-left: 20dvw;
+        margin-right: 20dvw;
     }
 
     .full-image {
         width: 60dvw;
         height: 33.75dvw;
-        margin-left: 20dvw;
-        margin-right: 20dvw;
+    }
+
+    .full-image-gif-mode-on {
+        width: 30dvw;
+        height: 16.875dvw;
+    }
+
+
+    .gif-start-end-frame-image-visible {
+        visibility: visible;
+        width: 25dvw;
+        height: calc(25dvw * 0.5625);
+    }
+
+    .gif-start-end-frame-image-hidden {
+        visibility: hidden;
+        width: 0dvw;
+        height: 0dvw;
+    }
+
+    .gif-start-end-input-visible{
+        width: 25dvw;
+    }
+
+    .gif-start-end-input-hidden{
+        height: 0dvh;
+        width: 0dvw;
+        visibility: hidden;
+    }
+
+
+    .generate-button-visible {
+        height: 5dvh;
+    }
+
+    .generate-button-hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0dvw;
+        height: 0dvw;
 
     }
+
+
     .close-button {
         position: absolute;
         width: 10dvh;
         height: 10dvh;
         color: red;
-        right: 20dvw;   
+        right: 20dvw;
+    }
+
+    .gif-mode-switch {
+        position: absolute;
+        padding: 2dvh;
+        background-color: #0000006b;
+        left: 20dvw;
+        top: 0dvh;
     }
 }
 
@@ -52,15 +154,73 @@
     .full-image {
         width: 60dvw;
         height: 33.75dvw;
+    }
+
+    .image-container {
+        width: 60dvw;
+        height: 33.75dvw;
         margin-left: 20dvw;
         margin-right: 20dvw;
     }
+
+    .full-image-gif-mode-on {
+        width: 30dvw;
+        height: 16.875dvw;
+    }
+
+
+    .gif-start-end-frame-image-visible {
+        visibility: visible;
+        width: 25dvw;
+        height: calc(25dvw * 0.5625);
+    }
+
+    .gif-start-end-frame-image-hidden {
+        visibility: hidden;
+        width: 0dvw;
+        height: 0dvw;
+    }
+
+    .gif-start-end-input-visible{
+        width: 25dvw;
+        padding-left: 5dvw;
+    }
+
+    .gif-start-end-input-hidden{
+        height: 0dvh;
+        width: 0dvw;
+        visibility: hidden;
+    }
+
+
+
+    .generate-button-visible {
+        height: 5dvh;
+    }
+
+    .generate-button-hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0dvw;
+        height: 0dvw;
+
+    }
+
+
     .close-button {
         position: absolute;
         width: 10dvh;
         height: 10dvh;
         color: red;
-        right: 20dvw;   
+        right: 20dvw;
+    }
+
+    .gif-mode-switch {
+        position: absolute;
+        padding: 2dvh;
+        background-color: #0000006b;
+        left: 20dvw;
+        top: 0dvh;
     }
 }
 
@@ -73,15 +233,73 @@
     .full-image {
         width: 100dvw;
         height: 56.25dvw;
+
+    }
+
+    .image-container {
+        width: 100dvw;
+        height: 56.25dvw;
         margin-top: 20dvh;
     }
+
+    .full-image-gif-mode-on {
+        width: 50dvw;
+        height: calc(50dvw * 0.5625);
+    }
+
+
+    .gif-start-end-frame-image-visible {
+        visibility: visible;
+        width: 35dvw;
+        height: calc(35dvw * 0.5625);
+    }
+
+    .gif-start-end-frame-image-hidden {
+        visibility: hidden;
+        width: 0dvw;
+        height: 0dvw;
+    }
+
+    .gif-start-end-input-visible{
+        width: 35dvw;
+    }
+
+    .gif-start-end-input-hidden{
+        height: 0dvh;
+        width: 0dvw;
+        visibility: hidden;
+    }
+
+
+
+    .generate-button-visible {
+        height: 5dvh;
+    }
+
+    .generate-button-hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0dvw;
+        height: 0dvw;
+
+    }
+
+
     .close-button {
         position: absolute;
         width: 10dvh;
         height: 10dvh;
         color: red;
-        right: 10dvw;   
-        top: 10dvh; 
+        right: 10dvw;
+        top: 10dvh;
+    }
+
+    .gif-mode-switch {
+        position: absolute;
+        padding: 2dvw;
+        background-color: #0000006b;
+        left: 0dvw;
+        top: 12dvh;
     }
 }
 
@@ -94,14 +312,72 @@
     .full-image {
         width: 100dvw;
         height: 56.25dvw;
+    }
+
+    .image-container {
+        width: 100dvw;
+        height: 56.25dvw;
         margin-top: 20dvh;
     }
+
+    .full-image-gif-mode-on {
+        width: 50dvw;
+        height: calc(50dvw * 0.5625);
+    }
+
+
+    .gif-start-end-frame-image-visible {
+        visibility: visible;
+        width: 35dvw;
+        height: calc(35dvw * 0.5625);
+    }
+
+    .gif-start-end-frame-image-hidden {
+        visibility: hidden;
+        width: 0dvw;
+        height: 0dvw;
+    }
+
+    .gif-start-end-input-visible{
+        width: 35dvw;
+    }
+
+    .gif-start-end-input-hidden{
+        height: 0dvh;
+        width: 0dvw;
+        visibility: hidden;
+    }
+
+
+
+    .generate-button-visible {
+        height: 5dvh;
+    }
+
+    .generate-button-hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0dvw;
+        height: 0dvw;
+
+    }
+
+
+
     .close-button {
         position: absolute;
         width: 10dvh;
         height: 10dvh;
         color: red;
-        right: 10dvw;  
-        top: 10dvh; 
+        right: 10dvw;
+        top: 10dvh;
+    }
+
+    .gif-mode-switch {
+        position: absolute;
+        padding: 2dvw;
+        background-color: #0000006b;
+        left: 0dvw;
+        top: 12dvh;
     }
 }
