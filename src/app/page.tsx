@@ -9,12 +9,12 @@ import data from './result.json';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Tooltip, Slider, Chip, IconButton, Switch, FormControlLabel, Hidden, Button, FormLabel, TextField, Input, useMediaQuery, useTheme } from "@mui/material";
+import { Tooltip, Slider, Chip, IconButton, Switch, FormControlLabel, Button, Input, useMediaQuery, useTheme } from "@mui/material";
 
 import { Chart, GoogleChartWrapper, ReactGoogleChartEvent } from "react-google-charts";
 
 import "./style.css";
-import { ArrowDownward, FastForward, FastRewind, Visibility } from "@mui/icons-material";
+import { ArrowDownward, FastForward, FastRewind } from "@mui/icons-material";
 const episodes = [
   "*", "1-3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"
 ]
