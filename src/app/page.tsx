@@ -184,9 +184,8 @@ function FullImageContainer({
     setCurrentFrame: React.Dispatch<number>
   }) {
 
-  //console.log("FullImageContainer :", segmentId);
   const theme = useTheme();
-  const large = useMediaQuery(theme.breakpoints.up("sm"));
+  const large: boolean = useMediaQuery(theme.breakpoints.up("sm"));
 
   const debounceChangeCurrentFrame = useCallback(
     _.debounce((frame: number, episode: string) => {
@@ -370,7 +369,7 @@ function FullImageContainer({
               startIcon={isReverse ? <FastRewind/> : <FastForward/>}
               onClick={handleReverseOnClick}
               className={isGifMode && isVisible ? "generate-button-visible" : "generate-button-hidden"}>
-              {`倒轉 ${gifRangeStartEnd[0]} ~ ${gifRangeStartEnd[1]} (${(delta / 24).toFixed(3)}秒)`}
+              {`倒轉 ${gifRangeStartEnd[0]} ~ ${gifRangeStartEnd[1]} (${(delta / 24).toFixed(3)}秒 / ${delta}幀)`}
             </Button>
 
           </div>
@@ -388,12 +387,12 @@ function FullImageContainer({
         (<Tooltip title={`${frameRangeStartEnd[0]}~${frameRangeStartEnd[1]} ${currentFrame}`}>
           <Chip
             style={{ position: large ? "absolute" : "relative", left: large ? "0dvw" : "45dvw"}}
-            color="primary"
-            sx={{ "& .MuiChip-colorPrimary": { color: SITE_THEME_COLOR } }}
+            sx={{backgroundColor: SITE_THEME_COLOR, color: "white"}}
             label={`${currentFrame - frameRangeStartEnd[0]}/${frameRangeStartEnd[1] - frameRangeStartEnd[0]}`} />
         </Tooltip>)
         }
         <Slider
+          id="frame-slider"
           sx={{
             "& .MuiSlider-thumb": {
               color: SITE_THEME_COLOR
@@ -418,11 +417,15 @@ function FullImageContainer({
               color: "white",
               height: 2,
               width: 2
+            },
+            "& .MuiSlider-valueLabel": {
+              backgroundColor: SITE_THEME_COLOR,
+              color: "white",
             }
           }}
           onChange={handleSliderOnChange}
           valueLabelDisplay="on"
-          style={{ marginTop: large ? "0dvh" : "5dvh", marginLeft: "10dvw", marginRight: "10dvw", width: "80dvw", height: "0px" }}
+          style={{ marginTop: "7dvh", marginLeft: "10dvw", marginRight: "10dvw", width: "80dvw", height: "0px" }}
           value={isGifMode ? gifRangeStartEnd : currentFrame}
           marks
           step={1}
@@ -572,6 +575,9 @@ function Timeline({
     callback: selectHandler
   }
 
+  const theme = useTheme();
+  const large: boolean = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <div style={{ background: "white" }}>
 
@@ -592,7 +598,7 @@ function Timeline({
         height="100px"
         chartEvents={[selectEvent]}
       />
-      <div style={{ position: "fixed", bottom: "5dvh", width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
+      <div style={{ position: "fixed", bottom: large ? "2dvh" : "5dvh", width: "100%", display: "flex", justifyContent: "center", alignContent: "center" }}>
         <IconButton
           style={{ background: SITE_THEME_COLOR, color: "white" }}
           onClick={() => {
