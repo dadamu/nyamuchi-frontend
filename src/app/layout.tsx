@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ backgroundColor: "#3381AF", height: "100%" }}>
       <head>
-      <title>MYGO</title>
+        <title>MYGO</title>
         <meta name="google-site-verification" content="_lnG5v_S320tjhKPWVgfjRrB8yBWmyxZRBrJmbgA2Hs" />
       </head>
       <body>{children}</body>

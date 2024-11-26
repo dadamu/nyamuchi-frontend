@@ -5,7 +5,7 @@ import * as _ from "lodash";
 import moment from "moment";
 
 import data from './result.json';
-
+import { episodes, HOST, CDN, SITE_THEME_COLOR, THUMB_PATH } from "./config";
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -15,16 +15,17 @@ import { Chart, GoogleChartWrapper, ReactGoogleChartEvent } from "react-google-c
 
 import "./style.css";
 import { ArrowDownward, FastForward, FastRewind } from "@mui/icons-material";
-const episodes = [
+/* const episodes = [
   "*", "1-3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"
 ]
 const HOST = 'https://anon-tokyo.com';
 const CDN = 'https://cdn.anon-tokyo.com';
 
 const SITE_THEME_COLOR = '#3381AF';
-const THUMB_PATH = "thumb"
+const THUMB_PATH = "thumb" */ 
 
 //const API = 'https://api.anon-tokyo.com'
+
 export default function Home() {
 
   //const [segment, setSegment] = useState({ episode: "", frame_current: -1, frame_start: -1, frame_end: -1, segment_id: -1, is_visible: false});
@@ -95,9 +96,9 @@ export default function Home() {
           segmentIdRef={segmentIdRef}
           setFrameRangeStartEnd={setFrameRangeStartEnd}
           setCurrentFrame={setCurrentFrame} />
-        <div style={{ position: "fixed", top: "0px" }}>
-          <input style={{ position: "relative", padding: "0.5rem", opacity: "0.7", top: "20px", left: "20px" }} placeholder="輸入台詞" value={keyword} onChange={handleKeywordOnChange}></input>
-          <select style={{ position: "relative", padding: "0.5rem", opacity: "0.7", top: "20px", left: "20px" }} onChange={handleEpisodeOnChange}>
+        <div style={{ position: "fixed", top: "20px", left: "20px" }}>
+          <input style={{ position: "relative", padding: "0.5rem", opacity: "0.7"}} placeholder="輸入台詞" value={keyword} onChange={handleKeywordOnChange}></input>
+          <select style={{ position: "relative", padding: "0.5rem", opacity: "0.7"}} onChange={handleEpisodeOnChange}>
             {episodes.map((e) => { return <option value={e} key={e}>{e}</option> })}
           </select>
         </div>
