@@ -5,7 +5,7 @@ import * as _ from "lodash";
 import moment from "moment";
 
 import data from './result.json';
-import { episodes, HOST, CDN, SITE_THEME_COLOR, THUMB_PATH } from "./config";
+import { episodes, HOST, CDN, SITE_THEME_COLOR, THUMB_PATH, HINT_LINK } from "./config";
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -22,7 +22,7 @@ const HOST = 'https://anon-tokyo.com';
 const CDN = 'https://cdn.anon-tokyo.com';
 
 const SITE_THEME_COLOR = '#3381AF';
-const THUMB_PATH = "thumb" */ 
+const THUMB_PATH = "thumb" */
 
 //const API = 'https://api.anon-tokyo.com'
 
@@ -97,11 +97,16 @@ export default function Home() {
           setFrameRangeStartEnd={setFrameRangeStartEnd}
           setCurrentFrame={setCurrentFrame} />
         <div style={{ position: "fixed", top: "20px", left: "20px" }}>
-          <input style={{ position: "relative", padding: "0.5rem", opacity: "0.7"}} placeholder="輸入台詞" value={keyword} onChange={handleKeywordOnChange}></input>
-          <select style={{ position: "relative", padding: "0.5rem", opacity: "0.7"}} onChange={handleEpisodeOnChange}>
+          <input style={{ position: "relative", padding: "0.5rem", opacity: "0.7" }} placeholder="輸入台詞" value={keyword} onChange={handleKeywordOnChange}></input>
+          <select style={{ position: "relative", padding: "0.5rem", opacity: "0.7" }} onChange={handleEpisodeOnChange}>
             {episodes.map((e) => { return <option value={e} key={e}>{e}</option> })}
           </select>
         </div>
+        <Chip
+          style={{ position: "absolute", top: "20px", right: "20px" }}
+          sx={{backgroundColor: "white", opacity: "0.7"}}
+          label={<a href={HINT_LINK} target="_blank">{"說明"}</a>} />
+
         {<FullImageContainer
           timelineEpisodeState={timelineEpisodeState}
           setTimelineEpisodeState={setTimelineEpisodeState}
@@ -252,7 +257,7 @@ function FullImageContainer({
 
   //const segment = data.result[segmentId];
 
-  const delta =  Math.abs(gifRangeStartEnd[0] - gifRangeStartEnd[1]);
+  const delta = Math.abs(gifRangeStartEnd[0] - gifRangeStartEnd[1]);
 
   const isGifValidRange: boolean = delta <= 240
     && gifRangeStartEnd[0] >= 0
@@ -366,7 +371,7 @@ function FullImageContainer({
                 backgroundColor: "white",
                 color: "black"
               }}
-              startIcon={isReverse ? <FastRewind/> : <FastForward/>}
+              startIcon={isReverse ? <FastRewind /> : <FastForward />}
               onClick={handleReverseOnClick}
               className={isGifMode && isVisible ? "generate-button-visible" : "generate-button-hidden"}>
               {`倒轉 ${gifRangeStartEnd[0]} ~ ${gifRangeStartEnd[1]} (${(delta / 24).toFixed(3)}秒 / ${delta}幀)`}
@@ -382,14 +387,14 @@ function FullImageContainer({
               setCurrentFrame(0);
             }} />
         </div>
-        
+
         {
-        (<Tooltip title={`${frameRangeStartEnd[0]}~${frameRangeStartEnd[1]} ${currentFrame}`}>
-          <Chip
-            style={{ position: large ? "absolute" : "relative", left: large ? "0dvw" : "45dvw"}}
-            sx={{backgroundColor: SITE_THEME_COLOR, color: "white"}}
-            label={`${currentFrame - frameRangeStartEnd[0]}/${frameRangeStartEnd[1] - frameRangeStartEnd[0]}`} />
-        </Tooltip>)
+          (<Tooltip title={`${frameRangeStartEnd[0]}~${frameRangeStartEnd[1]} ${currentFrame}`}>
+            <Chip
+              style={{ position: large ? "absolute" : "relative", left: large ? "0dvw" : "45dvw" }}
+              sx={{ backgroundColor: SITE_THEME_COLOR, color: "white" }}
+              label={`${currentFrame - frameRangeStartEnd[0]}/${frameRangeStartEnd[1] - frameRangeStartEnd[0]}`} />
+          </Tooltip>)
         }
         <Slider
           id="frame-slider"

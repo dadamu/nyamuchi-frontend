@@ -10,3 +10,5 @@ export const THUMB_PATH = "thumb"
 export const GA4_TOKEN = "G-RZRPMDK12F";
 
 export const GSC_TOKEN = "_lnG5v_S320tjhKPWVgfjRrB8yBWmyxZRBrJmbgA2Hs"
+
+export const HINT_LINK = "https://hackmd.io/@nxvdzv0ARzORfNIVLeRXNA/BJouXGm71e";
