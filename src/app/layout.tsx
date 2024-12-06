@@ -6,7 +6,15 @@
 //import { Analytics } from '@vercel/analytics/react';
 import ReactGA from "react-ga4";
 
-import { GA4_TOKEN, GSC_TOKEN, SITE_THEME_COLOR } from "./config";
+import {
+  GA4_TOKEN,
+  GSC_TOKEN,
+  SITE_DESCRIPTION,
+  SITE_PREVIEW,
+  SITE_THEME_COLOR,
+  SITE_TITLE,
+  SITE_URL,
+} from "./config";
 //const inter = Inter({ subsets: ["latin"] });
 ReactGA.initialize(GA4_TOKEN);
 
@@ -21,8 +29,12 @@ export default function RootLayout({
       style={{ backgroundColor: SITE_THEME_COLOR, height: "100%" }}
     >
       <head>
-        <title>MYGO</title>
+        <title>{SITE_TITLE}</title>
         <meta name="google-site-verification" content={GSC_TOKEN} />
+        <meta name="description" content={SITE_DESCRIPTION} />
+        <meta name="og:description" content={SITE_DESCRIPTION} />
+        <meta name="og:url" content={SITE_URL} />
+        <meta property="og:image" content={SITE_PREVIEW} />
       </head>
       <body>{children}</body>
     </html>

@@ -3,13 +3,23 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as _ from "lodash";
 
 import data from "./result.json";
-import { episodes, SITE_THEME_COLOR, HINT_LINK } from "./config";
-import { Chip } from "@mui/material";
+import { episodes, SITE_THEME_COLOR, HINT_LINK, HOST } from "./config";
+import { Checkbox, Chip, NoSsr } from "@mui/material";
 
 import SearchResult from "@/app/components/SearchResult";
 import FullImageContainer from "@/app/components/image-container/FullImageContainer";
 
 import "./style.css";
+import {
+  clearExternalParam,
+  clearPageStateFromUrlHash,
+  containAnyHash,
+  getPageStateFromUrlHash,
+  mergePageState,
+  setPageStateToUrlHash,
+} from "./url-hash";
+import { AddLinkOutlined } from "@mui/icons-material";
+import dynamic from "next/dynamic";
 /* const episodes = [
   "*", "1-3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"
 ]
@@ -22,15 +32,30 @@ const THUMB_PATH = "thumb" */
 //const API = 'https://api.anon-tokyo.com'
 
 export default function Home() {
+  const hasAnyHash = containAnyHash();
   //const [segment, setSegment] = useState({ episode: "", frame_current: -1, frame_start: -1, frame_end: -1, segment_id: -1, is_visible: false});
-
-  const [keyword, setKeyword] = useState("");
+  const [appendPageState, setAppendPageState]: [
+    boolean,
+    React.Dispatch<boolean>,
+  ] = useState(false);
+  const pageStateRef = useRef(getPageStateFromUrlHash());
+  const [keyword, setKeyword]: [string, React.Dispatch<string>] = useState(
+    () =>
+      _.isString(pageStateRef.current.keyword)
+        ? pageStateRef.current.keyword
+        : "",
+  );
   const handleKeywordOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
   };
   const [resultList, setResultList] = useState<any[]>([]);
 
-  const [episode, setEpisode] = useState("*");
+  const [episode, setEpisode]: [string, React.Dispatch<string>] = useState(
+    () =>
+      _.isString(pageStateRef.current.episode)
+        ? pageStateRef.current.episode
+        : "*",
+  );
   const handleEpisodeOnChange = (e: React.FormEvent<HTMLSelectElement>) => {
     setEpisode(e.currentTarget.value);
     //setSegment({ ...segment, episode: episode })
@@ -67,10 +92,13 @@ export default function Home() {
 
   const [segmentId, setSegmentId] = useState(0);
 
-  const [timelineEpisodeState, setTimelineEpisodeState] = useState("1-3");
+  //episode can be "*" wildcard, but timeline needs to be specific episode
+  const [timelineEpisodeState, setTimelineEpisodeState] = useState(episodes[1]);
 
-  const initStartEnd: [number, number] = [-1, -1];
-  const [frameRangeStartEnd, setFrameRangeStartEnd] = useState(initStartEnd);
+  const [frameRangeStartEnd, setFrameRangeStartEnd] = useState([-1, -1] as [
+    number,
+    number,
+  ]);
 
   const [gifRangeStartEnd, setGifRangeStartEnd] = useState([-1, -1] as [
     number,
@@ -79,8 +107,25 @@ export default function Home() {
 
   const segmentIdRef = useRef(0);
 
+  useEffect(() => {
+    const state = {
+      keyword: keyword,
+      episode: episode,
+    };
+    clearExternalParam();
+    mergePageState(state, pageStateRef);
+
+    if (appendPageState) {
+      setPageStateToUrlHash(pageStateRef);
+    } else {
+      clearPageStateFromUrlHash();
+    }
+
+    //console.log(JSON.stringify(pageStateRef.current));
+  }, [keyword, episode, appendPageState]);
+
   return (
-    <>
+    <NoSsr>
       <div
         style={{
           position: "relative",
@@ -100,13 +145,25 @@ export default function Home() {
           setFrameRangeStartEnd={setFrameRangeStartEnd}
           setCurrentFrame={setCurrentFrame}
         />
-        <div style={{ position: "fixed", top: "20px", left: "20px" }}>
+        <div
+          style={{
+            position: "fixed",
+            top: "20px",
+            left: "20px",
+            display: "flex",
+          }}
+        >
           <input
-            style={{ position: "relative", padding: "0.5rem", opacity: "0.7" }}
+            style={{
+              position: "relative",
+              padding: "0.5rem",
+              opacity: "0.7",
+              maxWidth: "25dvw",
+            }}
             placeholder="輸入台詞"
             value={keyword}
             onChange={handleKeywordOnChange}
-          ></input>
+          />
           <select
             style={{ position: "relative", padding: "0.5rem", opacity: "0.7" }}
             onChange={handleEpisodeOnChange}
@@ -119,6 +176,26 @@ export default function Home() {
               );
             })}
           </select>
+
+          <div
+            style={{
+              background: "white",
+              opacity: "0.7",
+              marginLeft: "1dvw",
+              alignContent: "center",
+              justifyContent: "center",
+              paddingLeft: "1dvw",
+              paddingRight: "1dvw",
+            }}
+          >
+            <AddLinkOutlined />
+            <input
+              id="check-box-append-page-state"
+              type="checkbox"
+              checked={appendPageState}
+              onChange={(e) => setAppendPageState(e.currentTarget.checked)}
+            />
+          </div>
         </div>
         <Chip
           style={{ position: "absolute", top: "20px", right: "20px" }}
@@ -158,7 +235,7 @@ export default function Home() {
           ></FullImageContainer>
         }
       </div>
-    </>
+    </NoSsr>
   );
 }
 
