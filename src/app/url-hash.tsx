@@ -53,7 +53,7 @@ export function clearPageStateFromUrlHash() {
 export function clearExternalParam() {
   if (typeof window !== "undefined") {
     //remove dumb fbclid and such
-    const url = URL.parse(
+    const url: URL = new URL(
       `${window.location.protocol}//${window.location.host}/`,
     );
     window.history.replaceState(null, "", url);
